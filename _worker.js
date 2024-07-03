@@ -3052,7 +3052,6 @@ const singboxConfigTemp = {
 			"geosite-googlefcm", 
 			"geosite-zoom",
 			"microsoft",
-			"",
 			"geosite-onedrive"
 		],
                 outbound: "direct"
