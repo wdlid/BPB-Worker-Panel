@@ -3042,13 +3042,24 @@ const singboxConfigTemp = {
                     "geosite-phishing",
                     "geosite-cryptominers",
                     "geoip-malware",
+		    "geosite-easylist",
                     "geoip-phishing"
                 ],
                 outbound: "block"
             },
             {
-                rule_set: ["geosite-ir", "geoip-ir"],
+                rule_set: [
+			"geosite-googlefcm", 
+			"geosite-zoom",
+			"microsoft",
+			"",
+			"geosite-onedrive"
+		],
                 outbound: "direct"
+            },		
+            {
+                rule_set: ["geosite-gfwlist", "geosite-netflix","geosite-porn", "telegram", "tiktok"],
+                outbound: "proxy"
             },
             {
                 ip_cidr: ["224.0.0.0/3", "ff00::/8"],
@@ -3059,11 +3070,60 @@ const singboxConfigTemp = {
         rule_set: [
             {
                 type: "remote",
-                tag: "geosite-ir",
+                tag: "geosite-easylist",
                 format: "binary",
-                url: "https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geosite-ir.srs",
+                url: "https://fastly.jsdelivr.net/gh/karingX/karing-ruleset@sing/ACL4SSR/BanEasyListChina.srs",
                 download_detour: "direct"
             },
+            {
+                type: "remote",
+                tag: "microsoft",
+                format: "binary",
+                url: "https://fastly.jsdelivr.net/gh/karingX/karing-ruleset@sing/ACL4SSR/Microsoft.srs",
+                download_detour: "direct"
+            },	
+            {
+                type: "remote",
+                tag: "tiktok",
+                format: "binary",
+                url: "https://fastly.jsdelivr.net/gh/karingX/karing-ruleset@sing/ACL4SSR/TikTok.srs",
+                download_detour: "direct"
+            },		
+            {
+                type: "remote",
+                tag: "telegram",
+                format: "binary",
+                url: "https://fastly.jsdelivr.net/gh/karingX/karing-ruleset@sing/ACL4SSR/Telegram.srs",
+                download_detour: "direct"
+            },		
+            {
+                type: "remote",
+                tag: "geosite-porn",
+                format: "binary",
+                url: "https://fastly.jsdelivr.net/gh/karingX/karing-ruleset@sing/ACL4SSR/Porn.srs",
+                download_detour: "direct"
+            },		
+            {
+                type: "remote",
+                tag: "geosite-onedrive",
+                format: "binary",
+                url: "https://fastly.jsdelivr.net/gh/karingX/karing-ruleset@sing/ACL4SSR/OneDrive.srs",
+                download_detour: "direct"
+            },		
+            {
+                type: "remote",
+                tag: "geosite-zoom",
+                format: "binary",
+                url: "https://fastly.jsdelivr.net/gh/karingX/karing-ruleset@sing/ACL4SSR/Zoom.srs",
+                download_detour: "direct"
+            },		
+            {
+                type: "remote",
+                tag: "geosite-googlefcm",
+                format: "binary",
+                url: "https://fastly.jsdelivr.net/gh/karingX/karing-ruleset@sing/ACL4SSR/GoogleFCM.srs",
+                download_detour: "direct"
+            },		
             {
                 type: "remote",
                 tag: "geosite-category-ads-all",
@@ -3094,9 +3154,9 @@ const singboxConfigTemp = {
             },
             {
                 type: "remote",
-                tag: "geoip-ir",
+                tag: "geosite-netflix",
                 format: "binary",
-                url: "https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geoip-ir.srs",
+                url: "https://fastly.jsdelivr.net/gh/karingX/karing-ruleset@sing/ACL4SSR/Netflix.srs",
                 download_detour: "direct"
             },
             {
@@ -3108,6 +3168,13 @@ const singboxConfigTemp = {
             },
             {
                 type: "remote",
+                tag: "geosite-gfwlist",
+                format: "binary",
+                url: "https://fastly.jsdelivr.net/gh/karingX/karing-ruleset@sing/ACL4SSR/ProxyGFWlist.srs",
+                download_detour: "direct"
+            },		
+            {
+                type: "remote",
                 tag: "geoip-phishing",
                 format: "binary",
                 url: "https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geoip-phishing.srs",
@@ -3116,7 +3183,7 @@ const singboxConfigTemp = {
         ],
         auto_detect_interface: true,
         override_android_vpn: true,
-        final: "proxy"
+        final: "direct"
     },
     experimental: {
         clash_api: {
