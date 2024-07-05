@@ -1399,8 +1399,8 @@ const buildDNSObject = async (remoteDNS, localDNS, blockAds, bypassIran, blockPo
           isWorkerLess ? "https://cloudflare-dns.com/dns-query" : remoteDNS,
           {
             address: localDNS,
-            domains: ["geosite:category-ir", "domain:.ir"],
-            expectIPs: ["geoip:ir"],
+            domains: ["geosite:cn","domain:.cn"],
+            expectIPs: ["geoip:cn"],
             port: 53,
           },
         ],
@@ -1466,7 +1466,7 @@ const buildRoutingRules = (localDNS, blockAds, bypassIran, blockPorn, bypassLAN,
         
         if (bypassIran && !isWorkerLess) {
             rules.push({
-                domain: ["geosite:category-ir", "domain:.ir"],
+                domain: ["geosite:cn", "domain:.cn"],
                 outboundTag: "direct",
                 type: "field",
             });
@@ -3047,7 +3047,10 @@ const singboxConfigTemp = {
 			"geosite-googlefcm", 
 			"geosite-zoom",
 			"microsoft",
-			"geosite-onedrive"
+			"geosite-onedrive",
+			"GeoSite-CN",
+			"GeoIP-MaxMind-CN-IPv4",
+			"GeoIP-MaxMind-CN-IPv6"
 		],
                 outbound: "direct"
             },		
@@ -3062,6 +3065,27 @@ const singboxConfigTemp = {
             }
         ],
         rule_set: [
+            {
+                "tag": "GeoSite-CN",
+                "type": "remote",
+                "format": "binary",
+		"download_detour": "proxy",
+                "url": "https://raw.githubusercontent.com/Dreista/sing-box-rule-set-cn/rule-set/accelerated-domains.china.conf.srs"
+            },
+            {
+                "tag": "GeoIP-MaxMind-CN-IPv4",
+                "type": "remote",
+		"download_detour": "proxy",
+                "format": "binary",
+                "url": "https://raw.githubusercontent.com/Dreista/sing-box-rule-set-cn/rule-set/maxmind-cn-ipv4.srs"
+            },
+            {
+                "tag": "GeoIP-MaxMind-CN-IPv6",
+                "type": "remote",
+		"download_detour": "proxy",
+                "format": "binary",
+                "url": "https://raw.githubusercontent.com/Dreista/sing-box-rule-set-cn/rule-set/maxmind-cn-ipv6.srs"
+            },		
             {
                 type: "remote",
                 tag: "geosite-easylist",
