@@ -2920,7 +2920,7 @@ const xrayOutboundTemp =
 
 const singboxConfigTemp = {
     log: {
-        level: "warn",
+        level: "info",
         timestamp: true
     },
     dns: {
