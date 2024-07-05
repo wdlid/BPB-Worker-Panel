@@ -3094,8 +3094,8 @@ const singboxConfigTemp = {
                 type: "remote",
                 tag: "geosite-porn",
                 format: "binary",
-                url: "https://fastly.jsdelivr.net/gh/karingX/karing-ruleset@sing/ACL4SSR/Porn.srs",
-                download_detour: "direct"
+                url: "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-category-porn.srs",
+                download_detour: "proxy"
             },		
             {
                 type: "remote",
