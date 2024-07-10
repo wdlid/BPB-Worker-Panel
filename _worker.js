@@ -2948,15 +2948,24 @@ const singboxConfigTemp = {
         ],
         rules: [
             {
+               "rule_set": "GeoSite-CN",
+               "server": "dns-direct"
+            }		,
+            {
                 domain_suffix: [".tw",".us",".uk",".de"],
-                server: "dns-direct"
+                server: "dns-remote"
             },
+            {
+                domain_suffix: [".home",".gw",".f5net.com",".local"],
+                server: "dns-local"
+            },		
             {
                 outbound: "direct",
                 server: "dns-direct"
             }
         ],
-        independent_cache: true
+        independent_cache: true,
+	"final": "dns-remote"
     },
     inbounds: [
         {
@@ -3042,6 +3051,18 @@ const singboxConfigTemp = {
                 ],
                 outbound: "block"
             },
+	    {
+		"domain_suffix": [".cn",".gw",".home",".f5net.com",".jnpr.net",".local"],
+		outbound: "direct"
+	    },
+	    {
+		"domain_suffix": [".de",".tw",".us",".au",".jp"],
+		outbound: "proxy"
+	    },		
+            {
+                rule_set: ["bing","telegram", "tiktok", "yahoo", "fdroid", "claude","claudeai","geosite-netflix","geosite-porn"],
+                outbound: "proxy"
+            },		
             {
                 rule_set: [
 			"geosite-googlefcm", 
@@ -3055,7 +3076,7 @@ const singboxConfigTemp = {
                 outbound: "direct"
             },		
             {
-                rule_set: ["geosite-gfwlist", "geosite-netflix","geosite-porn", "telegram", "tiktok"],
+                rule_set: ["geosite-gfwlist"],
                 outbound: "proxy"
             },
             {
@@ -3080,6 +3101,13 @@ const singboxConfigTemp = {
                 "url": "https://raw.githubusercontent.com/Dreista/sing-box-rule-set-cn/rule-set/maxmind-cn-ipv4.srs"
             },
             {
+                "tag": "bing",
+                "type": "remote",
+		"download_detour": "direct",
+                "format": "binary",
+                "url": "https://fastly.jsdelivr.net/gh/karingX/karing-ruleset@sing/ACL4SSR/Ruleset/Bing.srs"
+            },		
+            {
                 "tag": "GeoIP-MaxMind-CN-IPv6",
                 "type": "remote",
 		"download_detour": "proxy",
@@ -3093,6 +3121,20 @@ const singboxConfigTemp = {
                 url: "https://fastly.jsdelivr.net/gh/karingX/karing-ruleset@sing/ACL4SSR/BanEasyListChina.srs",
                 download_detour: "direct"
             },
+            {
+                type: "remote",
+                tag: "claude",
+                format: "binary",
+                url: "https://fastly.jsdelivr.net/gh/karingX/karing-ruleset@sing/ACL4SSR/Claude.srs",
+                download_detour: "direct"
+            },
+            {
+                type: "remote",
+                tag: "claudeai",
+                format: "binary",
+                url: "https://fastly.jsdelivr.net/gh/karingX/karing-ruleset@sing/ACL4SSR/ClaudeAI.srs",
+                download_detour: "direct"
+            },		
             {
                 type: "remote",
                 tag: "microsoft",
@@ -3141,7 +3183,21 @@ const singboxConfigTemp = {
                 format: "binary",
                 url: "https://fastly.jsdelivr.net/gh/karingX/karing-ruleset@sing/ACL4SSR/GoogleFCM.srs",
                 download_detour: "direct"
-            },		
+            },	
+            {
+                type: "remote",
+                tag: "fdroid",
+                format: "binary",
+                url: "https://github.com/KaringX/karing-ruleset/raw/28db1146afec6f6391549edb0674d77b07d32938/geo/geosite/f-droid.srs",
+                download_detour: "proxy"
+            },
+            {
+                type: "remote",
+                tag: "yahoo",
+                format: "binary",
+                url: "https://github.com/KaringX/karing-ruleset/raw/sing/geo/geosite/yahoo.srs",
+                download_detour: "proxy"
+            },			
             {
                 type: "remote",
                 tag: "geosite-phishing",
