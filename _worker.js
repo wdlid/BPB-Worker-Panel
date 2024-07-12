@@ -47,7 +47,7 @@ export default {
                 const searchParams = new URLSearchParams(url.search);
                 const host = request.headers.get('Host');
                 const client = searchParams.get('app');
-
+		    
                 switch (url.pathname) {
 
                     case '/cf':
@@ -65,7 +65,10 @@ export default {
                             return new Response(`${JSON.stringify(BestPingSFA, null, 4)}`, { status: 200 });                            
                         }
                         const normalConfigs = await getNormalConfigs(env, host, client);
-                        return new Response(normalConfigs, { status: 200 });                        
+                        if (client === 'subconvert') {
+                            return new Response(atob(normalConfigs), { status: 200 });                           
+                        }
+                        return new Response(normalConfigs, { status: 200 }); 
 
                     case `/fragsub/${userID}`:
 
