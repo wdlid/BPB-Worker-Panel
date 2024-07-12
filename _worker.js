@@ -778,7 +778,7 @@ async function handleUDPOutBound(webSocket, vlessResponseHeader, log) {
 const getNormalConfigs = async (env, hostName, client) => {
     let proxySettings = {};
     let vlessWsTls = '';
-    let clashcfg = 'proxyies:\n  '
+    let clashcfg = 'proxies:\n  '
     try {
         proxySettings = await env.bpb.get("proxySettings", {type: 'json'});
     } catch (error) {
