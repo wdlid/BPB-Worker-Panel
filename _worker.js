@@ -806,7 +806,7 @@ const getNormalConfigs = async (env, hostName, client) => {
                 temp.network = 'ws'
                 temp.server = addr
                 temp.servername = randomUpperCase(hostName)
-                temp.tls = 'true'
+                temp.tls = true
                 temp.uuid = userID
                 temp['ws-opts'] = {}
                 temp['ws-opts'].path = `${`/${getRandomPath(16)}${proxyIP ? `/${encodeURIComponent(btoa(proxyIP))}` : ''}`}${encodeURIComponent('?ed=2560')}`
