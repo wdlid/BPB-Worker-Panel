@@ -802,7 +802,7 @@ const getNormalConfigs = async (env, hostName, client) => {
     ports.forEach(port => {
         Addresses.forEach((addr, index) => {
 
-            vlessWsTls += 'vless' + `://${userID}@${addr}:${port}?encryption=none&type=ws&host=${
+            vlessWsTls += 'vless://' + btoa(`${userID}@${addr}:${port}?encryption=none&type=ws&host=${
                 randomUpperCase(hostName)}${
                 defaultHttpsPorts.includes(port) 
                     ? `&security=tls&sni=${
@@ -814,7 +814,7 @@ const getNormalConfigs = async (env, hostName, client) => {
                         client === 'singbox' 
                             ? '&eh=Sec-WebSocket-Protocol&ed=2560' 
                             : encodeURIComponent('?ed=2560')
-                    }#${encodeURIComponent(generateRemark(index, port))}\n`;
+                    }#${encodeURIComponent(generateRemark(index, port))}`)+'\n';
         });
     });
 
