@@ -65,9 +65,6 @@ export default {
                             return new Response(`${JSON.stringify(BestPingSFA, null, 4)}`, { status: 200 });                            
                         }
                         const normalConfigs = await getNormalConfigs(env, host, client);
-                        if (client === 'subconvert') {
-                            return new Response(atob(normalConfigs), { status: 200 });                           
-                        }
                         return new Response(normalConfigs, { status: 200 }); 
 
                     case `/fragsub/${userID}`:
@@ -781,7 +778,7 @@ async function handleUDPOutBound(webSocket, vlessResponseHeader, log) {
 const getNormalConfigs = async (env, hostName, client) => {
     let proxySettings = {};
     let vlessWsTls = '';
-
+    let clashcfg = 'proxyies:\n  '
     try {
         proxySettings = await env.bpb.get("proxySettings", {type: 'json'});
     } catch (error) {
@@ -801,24 +798,42 @@ const getNormalConfigs = async (env, hostName, client) => {
 
     ports.forEach(port => {
         Addresses.forEach((addr, index) => {
-
-            vlessWsTls += 'vless://' + btoa(`${userID}@${addr}:${port}?encryption=none&type=ws&host=${
-                randomUpperCase(hostName)}${
-                defaultHttpsPorts.includes(port) 
-                    ? `&security=tls&sni=${
-                        randomUpperCase(hostName)
-                    }&fp=randomized&alpn=${
-                        client === 'singbox' ? 'http/1.1' : 'h2,http/1.1'
-                    }`
-                    : ''}&path=${`/${getRandomPath(16)}${proxyIP ? `/${encodeURIComponent(btoa(proxyIP))}` : ''}`}${
-                        client === 'singbox' 
-                            ? '&eh=Sec-WebSocket-Protocol&ed=2560' 
-                            : encodeURIComponent('?ed=2560')
-                    }#${encodeURIComponent(generateRemark(index, port))}`)+'\n';
+            if (client == "clash") {
+                let temp = {}
+                temp.name = `${encodeURIComponent(generateRemark(index, port))}`
+                temp.type = 'vless'
+                temp.port = port
+                temp.network = 'ws'
+                temp.server = addr
+                temp.servername = randomUpperCase(hostName)
+                temp.tls = 'true'
+                temp.uuid = userID
+                temp['ws-opts'] = {}
+                temp['ws-opts'].path = `${`/${getRandomPath(16)}${proxyIP ? `/${encodeURIComponent(btoa(proxyIP))}` : ''}`}encodeURIComponent('?ed=2560')`
+                temp['client-fingerprint'] = "randomized"
+                clashcfg = clashcfg + '- 'JSON.stringify(temp) + '\n  '
+            } else {
+                vlessWsTls += 'vless://' + `${userID}@${addr}:${port}?encryption=none&type=ws&host=${
+                        randomUpperCase(hostName)}${
+                        defaultHttpsPorts.includes(port) 
+                            ? `&security=tls&sni=${
+                                randomUpperCase(hostName)
+                            }&fp=randomized&alpn=${
+                                client === 'singbox' ? 'http/1.1' : 'h2,http/1.1'
+                            }`
+                            : ''}&path=${`/${getRandomPath(16)}${proxyIP ? `/${encodeURIComponent(btoa(proxyIP))}` : ''}`}${
+                                client === 'singbox' 
+                                    ? '&eh=Sec-WebSocket-Protocol&ed=2560' 
+                                    : encodeURIComponent('?ed=2560')
+                            }#${encodeURIComponent(generateRemark(index, port))}` + '\n';
+            }
         });
     });
-
-    return btoa(vlessWsTls);
+    if (client == 'clash') {
+        return clashcfg
+    } else {
+        return btoa(vlessWsTls);
+    }
 }
 
 const generateRemark = (index, port) => {
