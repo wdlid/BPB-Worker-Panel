@@ -809,8 +809,11 @@ const getNormalConfigs = async (env, hostName, client) => {
                 temp.tls = true
                 temp.uuid = userID
                 temp['ws-opts'] = {}
-                temp['ws-opts'].path = `${`/${getRandomPath(16)}${proxyIP ? `/${encodeURIComponent(btoa(proxyIP))}` : ''}`}${encodeURIComponent('?ed=2560')}`
-                temp['client-fingerprint'] = "randomized"
+		temp['ws-opts']['early-data-header-name'] = 'Sec-WebSocket-Protocol'
+                temp['ws-opts'].path = `/${getRandomPath(16)}?ed=2560`
+		temp['ws-opts'].headers = {}
+		temp['ws-opts'].headers.host = hostName
+                temp['client-fingerprint'] = "chrome"
                 clashcfg = clashcfg + '- ' + JSON.stringify(temp) + '\n  '
             } else {
                 vlessWsTls += 'vless://' + `${userID}@${addr}:${port}?encryption=none&type=ws&host=${
