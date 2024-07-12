@@ -800,7 +800,7 @@ const getNormalConfigs = async (env, hostName, client) => {
         Addresses.forEach((addr, index) => {
             if (client == "clash") {
                 let temp = {}
-                temp.name = `${encodeURIComponent(generateRemark(index, port))}`
+                temp.name = generateRemark(index, port)
                 temp.type = 'vless'
                 temp.port = port
                 temp.network = 'ws'
