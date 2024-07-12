@@ -811,7 +811,7 @@ const getNormalConfigs = async (env, hostName, client) => {
                 temp['ws-opts'] = {}
                 temp['ws-opts'].path = `${`/${getRandomPath(16)}${proxyIP ? `/${encodeURIComponent(btoa(proxyIP))}` : ''}`}encodeURIComponent('?ed=2560')`
                 temp['client-fingerprint'] = "randomized"
-                clashcfg = clashcfg + '- 'JSON.stringify(temp) + '\n  '
+                clashcfg = clashcfg + '- ' + JSON.stringify(temp) + '\n  '
             } else {
                 vlessWsTls += 'vless://' + `${userID}@${addr}:${port}?encryption=none&type=ws&host=${
                         randomUpperCase(hostName)}${
