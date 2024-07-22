@@ -1222,7 +1222,7 @@ const getSingboxConfig = async (env, hostName, client) => {
     config.dns.servers[0].address = remoteDNS;
     config.dns.servers[1].address = localDNS;
     if (client == 'openwrt') {
-	config.route.rules.splice(4)
+	config.route.rules.splice(5)
 	config.route.final = 'proxy'
     }
     const resolved = await resolveDNS(hostName);
@@ -3070,6 +3070,11 @@ const singboxConfigTemp = {
                 outbound: "direct"
             },
             {
+                ip_cidr: ["224.0.0.0/3", "ff00::/8"],
+                source_ip_cidr: ["224.0.0.0/3", "ff00::/8"],
+                outbound: "block"
+            },		
+            {
                 rule_set: [
                     "geosite-phishing",
 		    "geosite-easylist"
@@ -3085,7 +3090,7 @@ const singboxConfigTemp = {
 		outbound: "proxy"
 	    },		
             {
-                rule_set: ["bing","telegram", "tiktok", "yahoo", "fdroid", "claude","claudeai","geosite-netflix","geosite-porn"],
+                rule_set: ["bing","telegram", "tiktok", "yahoo", "fdroid", "claude","claudeai","geosite-netflix","geosite-porn", "geosite-anticensorship","mediaNoCN", "vpnservices"],
                 outbound: "proxy"
             },		
             {
@@ -3093,10 +3098,7 @@ const singboxConfigTemp = {
 			"geosite-googlefcm", 
 			"geosite-zoom",
 			"microsoft",
-			"geosite-onedrive",
-			"GeoSite-CN",
-			"GeoIP-MaxMind-CN-IPv4",
-			"GeoIP-MaxMind-CN-IPv6"
+			"geosite-onedrive"
 		],
                 outbound: "direct"
             },		
@@ -3105,10 +3107,13 @@ const singboxConfigTemp = {
                 outbound: "proxy"
             },
             {
-                ip_cidr: ["224.0.0.0/3", "ff00::/8"],
-                source_ip_cidr: ["224.0.0.0/3", "ff00::/8"],
-                outbound: "block"
-            }
+                rule_set: [
+			"GeoSite-CN",
+			"GeoIP-MaxMind-CN-IPv4",
+			"GeoIP-MaxMind-CN-IPv6"
+		],
+                outbound: "direct"
+            },			
         ],
         rule_set: [
             {
@@ -3125,6 +3130,13 @@ const singboxConfigTemp = {
                 "format": "binary",
                 "url": "https://raw.githubusercontent.com/Dreista/sing-box-rule-set-cn/rule-set/maxmind-cn-ipv4.srs"
             },
+            {
+                type: "remote",
+                tag: "geosite-anticensorship",
+                format: "binary",
+                url: "https://github.com/KaringX/karing-ruleset/raw/afbc16b7582f61263af87ef33ca55cbbd0ba4ac2/geo/geosite/category-anticensorship.srs",
+                download_detour: "proxy"
+            },		
             {
                 "tag": "bing",
                 "type": "remote",
@@ -3157,8 +3169,8 @@ const singboxConfigTemp = {
                 type: "remote",
                 tag: "claudeai",
                 format: "binary",
-                url: "https://fastly.jsdelivr.net/gh/karingX/karing-ruleset@sing/ACL4SSR/ClaudeAI.srs",
-                download_detour: "direct"
+                url: "https://github.com/KaringX/karing-ruleset/raw/afbc16b7582f61263af87ef33ca55cbbd0ba4ac2/geo/geosite/anthropic.srs",
+                download_detour: "proxy"
             },		
             {
                 type: "remote",
@@ -3222,7 +3234,21 @@ const singboxConfigTemp = {
                 format: "binary",
                 url: "https://github.com/KaringX/karing-ruleset/raw/sing/geo/geosite/yahoo.srs",
                 download_detour: "proxy"
-            },			
+            },	
+            {
+                type: "remote",
+                tag: "mediaNoCN",
+                format: "binary",
+                url: "https://github.com/KaringX/karing-ruleset/raw/afbc16b7582f61263af87ef33ca55cbbd0ba4ac2/geo/geosite/category-social-media-!cn.srs",
+                download_detour: "proxy"
+            },
+            {
+                type: "remote",
+                tag: "vpnservices",
+                format: "binary",
+                url: "https://github.com/KaringX/karing-ruleset/raw/afbc16b7582f61263af87ef33ca55cbbd0ba4ac2/geo/geosite/category-vpnservices.srs",
+                download_detour: "proxy"
+            },		
             {
                 type: "remote",
                 tag: "geosite-phishing",
