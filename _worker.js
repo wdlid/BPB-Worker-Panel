@@ -60,8 +60,8 @@ export default {
                         
                     case `/sub/${userID}`:
 
-                        if (client === 'sfa') {
-                            const BestPingSFA = await getSingboxConfig(env, host);
+                        if (client === 'sfa' || client === 'openwrt') {
+                            const BestPingSFA = await getSingboxConfig(env, host, client);
                             return new Response(`${JSON.stringify(BestPingSFA, null, 4)}`, { status: 200 });                            
                         }
                         const normalConfigs = await getNormalConfigs(env, host, client);
@@ -1207,7 +1207,7 @@ const getFragmentConfigs = async (env, hostName, client) => {
     return Configs;
 }
 
-const getSingboxConfig = async (env, hostName) => {
+const getSingboxConfig = async (env, hostName, client) => {
     let proxySettings = {};
     
     try {
@@ -1221,6 +1221,10 @@ const getSingboxConfig = async (env, hostName) => {
     let config = structuredClone(singboxConfigTemp);
     config.dns.servers[0].address = remoteDNS;
     config.dns.servers[1].address = localDNS;
+    if (client == 'openwrt') {
+	config.route.rules.splice(4)
+	config.route.final = 'proxy'
+    }
     const resolved = await resolveDNS(hostName);
     const Addresses = [
         hostName,
@@ -3250,7 +3254,7 @@ const singboxConfigTemp = {
             external_controller: "0.0.0.0:9090",
             external_ui: "yacd",
             external_ui_download_url: "https://github.com/MetaCubeX/Yacd-meta/archive/gh-pages.zip",
-            external_ui_download_detour: "direct",
+            external_ui_download_detour: "proxy",
             secret: "PSEUDOsection",
             default_mode: "rule"
         }
