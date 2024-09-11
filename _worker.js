@@ -3090,7 +3090,7 @@ const singboxConfigTemp = {
 		outbound: "proxy"
 	    },		
             {
-                rule_set: ["bing","telegram", "tiktok", "yahoo", "fdroid", "claude","claudeai","geosite-netflix","geosite-porn", "geosite-anticensorship","mediaNoCN", "vpnservices"],
+                rule_set: ["bing","telegram", "tiktok", "yahoo", "fdroid", "claude","claudeai","geosite-netflix","geosite-porn", "geosite-anticensorship","mediaNoCN", "vpnservices","category-forums"],
                 outbound: "proxy"
             },		
             {
@@ -3134,8 +3134,8 @@ const singboxConfigTemp = {
                 type: "remote",
                 tag: "geosite-anticensorship",
                 format: "binary",
-                url: "https://github.com/KaringX/karing-ruleset/raw/afbc16b7582f61263af87ef33ca55cbbd0ba4ac2/geo/geosite/category-anticensorship.srs",
-                download_detour: "proxy"
+                url: "https://fastly.jsdelivr.net/gh/karingX/karing-ruleset@sing/geo/geosite/category-anticensorship.srs",
+                download_detour: "direct"
             },		
             {
                 "tag": "bing",
@@ -3169,8 +3169,8 @@ const singboxConfigTemp = {
                 type: "remote",
                 tag: "claudeai",
                 format: "binary",
-                url: "https://github.com/KaringX/karing-ruleset/raw/afbc16b7582f61263af87ef33ca55cbbd0ba4ac2/geo/geosite/anthropic.srs",
-                download_detour: "proxy"
+                url: "https://fastly.jsdelivr.net/gh/karingX/karing-ruleset@sing/geo/geosite/anthropic.srs",
+                download_detour: "direct"
             },		
             {
                 type: "remote",
@@ -3197,8 +3197,8 @@ const singboxConfigTemp = {
                 type: "remote",
                 tag: "geosite-porn",
                 format: "binary",
-                url: "https://raw.githubusercontent.com/lyc8503/sing-box-rules/rule-set-geosite/geosite-category-porn.srs",
-                download_detour: "proxy"
+                url: "https://fastly.jsdelivr.net/gh/karingX/karing-ruleset@sing/geo/geosite/category-porn.srs",
+                download_detour: "direct"
             },		
             {
                 type: "remote",
@@ -3225,35 +3225,35 @@ const singboxConfigTemp = {
                 type: "remote",
                 tag: "fdroid",
                 format: "binary",
-                url: "https://github.com/KaringX/karing-ruleset/raw/28db1146afec6f6391549edb0674d77b07d32938/geo/geosite/f-droid.srs",
-                download_detour: "proxy"
+                url: "https://fastly.jsdelivr.net/gh/karingX/karing-ruleset@sing/geo/geosite/f-droid.srs",
+                download_detour: "direct"
             },
             {
                 type: "remote",
                 tag: "yahoo",
                 format: "binary",
-                url: "https://github.com/KaringX/karing-ruleset/raw/sing/geo/geosite/yahoo.srs",
-                download_detour: "proxy"
+                url: "https://fastly.jsdelivr.net/gh/karingX/karing-ruleset@sing/geo/geosite/yahoo.srs",
+                download_detour: "direct"
             },	
             {
                 type: "remote",
                 tag: "mediaNoCN",
                 format: "binary",
-                url: "https://github.com/KaringX/karing-ruleset/raw/afbc16b7582f61263af87ef33ca55cbbd0ba4ac2/geo/geosite/category-social-media-!cn.srs",
-                download_detour: "proxy"
+                url: "https://fastly.jsdelivr.net/gh/karingX/karing-ruleset@sing/geo/geosite/category-social-media-!cn.srs",
+                download_detour: "direct"
             },
             {
                 type: "remote",
                 tag: "vpnservices",
                 format: "binary",
-                url: "https://github.com/KaringX/karing-ruleset/raw/afbc16b7582f61263af87ef33ca55cbbd0ba4ac2/geo/geosite/category-vpnservices.srs",
-                download_detour: "proxy"
+                url: "https://fastly.jsdelivr.net/gh/karingX/karing-ruleset@sing/geo/geosite/category-vpnservices.srs",
+                download_detour: "direct"
             },		
             {
                 type: "remote",
                 tag: "geosite-phishing",
                 format: "binary",
-                url: "https://raw.githubusercontent.com/Chocolate4U/Iran-sing-box-rules/rule-set/geosite-phishing.srs",
+                url: "https://fastly.jsdelivr.net/gh/karingX/karing-ruleset@sing/geo/geoip/phishing.srs",
                 download_detour: "direct"
             },
             {
@@ -3263,6 +3263,13 @@ const singboxConfigTemp = {
                 url: "https://fastly.jsdelivr.net/gh/karingX/karing-ruleset@sing/ACL4SSR/Netflix.srs",
                 download_detour: "direct"
             },
+            {
+                type: "remote",
+                tag: "category-forums",
+                format: "binary",
+                url: "https://fastly.jsdelivr.net/gh/karingX/karing-ruleset@sing/geo/geosite/category-forums.srs",
+                download_detour: "direct"
+            },		
             {
                 type: "remote",
                 tag: "geosite-gfwlist",
